@@ -3,19 +3,20 @@ import requests
 import csv
 import json
 
-# Tworzymy token autoryzacyjny do API pogodowego
+# Authorization token
 headers = {'Authorization': 'Token {}'.format("yourAuthorizationToken")}
 
-# Tworzymy plik CSV
-f = csv.writer(open("wynikiPogodowe"+datetime.datetime.now().isoformat()+".csv", "w"), lineterminator='\n')
+# Create CSV
 
-# Dopisujemy tytuly kolumn
+f = csv.writer(open("wynikiPogodowe_"+datetime.datetime.now().isoformat()+".csv", "w"), lineterminator='\n')
+
+# Columns headers
 f.writerow(["Data", "Temperatura (F)"])
 
-# Funkcja odpowiedzialna za dni niestandardowe
+# Custom day range
 def petlaDni():
-    dOd = input("Podaj date rozpoczecia DD/MM/YY: ")
-    dDo = input("Podaj date zakonczenia DD/MM/YY: ")
+    dOd = raw_input("Podaj date rozpoczecia DD/MM/YY: ")
+    dDo = raw_input("Podaj date zakonczenia DD/MM/YY: ")
 
     dataRozpoczecia = datetime.datetime.strptime(dOd, "%d/%m/%y")
     dataZakonczenia = datetime.datetime.strptime(dDo, "%d/%m/%y")
@@ -41,7 +42,7 @@ def petlaDni():
 
         dataRozpoczecia = dataRozpoczecia + datetime.timedelta(days=1)
 
-
+# Yesterday
 def dzienWczorajszy():
     kolumnaA = []
     kolumnaB = []
@@ -115,14 +116,15 @@ options = {
     4 : ostatnie30dni,
 }
 
-numerFunkcji = int(input("\nZ tej strony Pogodynka, ponizej znajdziesz moje funkcje\n"
+numerFunkcji = int(input("\nHi there, this is list of wheater range:\n"
                          "----------------------------------\n"
-                         "1: Pogoda dla niestandardowej daty\n"
-                         "2: Pogoda za wczoraj\n"
-                         "3: Pogoda za ostatnie 7 dni\n"
-                         "4: Pogoda za ostatnie 30 dni\n\n"
-                         "Wybierz funkcje: "))
+                         "[1]: Custom range\n"
+                         "[2]: Yesterday\n"
+                         "[3]: Last 7 days\n"
+                         "[4]: Last 30 days\n"
+                         "[0]: Exit\n\n"
+                         "Choose function: "))
 
 options[numerFunkcji]()
 
-print ("\nZ powodzeniem zapisano plik: wynikiPogodowe.csv\n")
+print ("\nSuccessful! File created: wynikiPogodowe_"+datetime.datetime.now().isoformat()+".csv\n")
