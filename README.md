@@ -1,2 +1,2 @@
 # wheater-app
-Simple app using wheater API. Key object was to agregate historical forecasts and rewrite them into .csv file or database.
+Simple app using wheater API. The key objective was to agregate historical forecasts and rewrite them into .csv file or insert into database.
